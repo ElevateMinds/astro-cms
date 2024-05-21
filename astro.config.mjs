@@ -1,9 +1,14 @@
 import { defineConfig } from "astro/config";
+import react from "@astrojs/react";
 
-import db from "@astrojs/db";
-import auth from "auth-astro";
+import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [db(), auth()],
+  integrations: [
+    react(),
+    tailwind({
+      applyBaseStyles: false,
+    }),
+  ],
 });
