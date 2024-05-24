@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/astrocms","packages/astrocms-next"
   ],
   "scripts": {
     "back:dev": "cd packages/astrocms && npm run dev",

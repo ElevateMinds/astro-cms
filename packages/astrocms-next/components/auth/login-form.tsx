@@ -18,10 +18,11 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
-
-// import { Login } from "@/actions/login";
+import { Login } from "@/actions/auth";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
@@ -35,23 +36,22 @@ const LoginForm = () => {
     setError("");
     setSuccess("");
     startTransition(async () => {
-      // const res = await Login(values);
-      // if (res.error) setError(res.error);
-      // if (res.success) setSuccess(res.success);
+      const res = await Login(values);
+      if (res.error) setError(res.error);
+      if (res.success) router.push('/dashboard');
     });
   };
   return (
     <CardWrapper
-      headerLabel="Welcome Back"
+      headerLabel='Welcome Back'
       backButtonLabel="Don't have an account ?"
-      backButtonHref="/auth/register"
-    >
+      backButtonHref='/auth/register'>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+          <div className='space-y-4'>
             <FormField
               control={form.control}
-              name="email"
+              name='email'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
@@ -59,8 +59,8 @@ const LoginForm = () => {
                     <Input
                       {...field}
                       disabled={isPending}
-                      placeholder="john.doe@gmail.com"
-                      type="email"
+                      placeholder='john.doe@gmail.com'
+                      type='email'
                     />
                   </FormControl>
                   <FormMessage />
@@ -69,7 +69,7 @@ const LoginForm = () => {
             />
             <FormField
               control={form.control}
-              name="password"
+              name='password'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
@@ -77,8 +77,8 @@ const LoginForm = () => {
                     <Input
                       disabled={isPending}
                       {...field}
-                      placeholder="********"
-                      type="password"
+                      placeholder='********'
+                      type='password'
                     />
                   </FormControl>
                   <FormMessage />
@@ -88,7 +88,7 @@ const LoginForm = () => {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button disabled={isPending} type="submit" className="w-full">
+          <Button disabled={isPending} type='submit' className='w-full'>
             Login
           </Button>
         </form>
